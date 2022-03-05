@@ -44,6 +44,7 @@ func main() {
 			fmt.Println("Enter an <ID> and <count> to buy given number of books")
 			return
 		}
+		//check book id and count is integer
 		check1, id := library.IsInt(args[2])
 		check2, count := library.IsInt(args[3])
 		if !check1 || !check2 {
@@ -57,6 +58,7 @@ func main() {
 			fmt.Println("Enter an <ID> to delete a book")
 			return
 		}
+		//check book id is integer
 		check1, id := library.IsInt(args[2])
 		if !check1 {
 			fmt.Println("ID must be integer")
