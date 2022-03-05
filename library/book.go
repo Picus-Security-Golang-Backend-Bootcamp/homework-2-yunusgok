@@ -3,7 +3,6 @@ package library
 import (
 	"fmt"
 	"math/rand"
-	"time"
 )
 
 var ID int = 1
@@ -27,18 +26,16 @@ func NewBook(name string, author string) *Book {
 	book.author = author
 	book.id = ID
 	//Seed is current time to give randomness
-	s1 := rand.NewSource(time.Now().UnixNano())
-	r1 := rand.New(s1)
 	// page count will be in range 300-400
-	book.pageCount = r1.Intn(300) + 100
+	book.pageCount = rand.Intn(300) + 100
 	// price will be in range 20.00- 220.00
-	book.price = r1.Float64()*200 + 20
+	book.price = rand.Float64()*200 + 20
 	// ISBN will be in range 100000 - 1000000
-	book.ISBN = r1.Intn(100000) + 100000
+	book.ISBN = rand.Intn(100000) + 100000
 	// stock count  will be in range 0-50
-	book.stockCount = r1.Intn(50)
+	book.stockCount = rand.Intn(50)
 	// stock code  will be in range 100000 - 1000000
-	book.stockCode = r1.Intn(100000) + 100000
+	book.stockCode = rand.Intn(100000) + 100000
 	// book is initially not deleted
 	book.isDeleted = false
 	//id will be incremented for next book
@@ -66,6 +63,6 @@ func (book *Book) Buy(count int) error {
 		return ErrNotEnoughStock
 	}
 	book.stockCount -= count
-	fmt.Printf("Book: %s is buyed by user. New stockCount is %d", book.name, book.stockCode)
+	fmt.Printf("Book: %s is buyed by user. New stockCount is %d", book.name, book.stockCount)
 	return nil
 }

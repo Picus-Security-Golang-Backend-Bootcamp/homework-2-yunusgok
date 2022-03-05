@@ -24,12 +24,6 @@ func main() {
 		fmt.Printf("%s operations are : \n search \n list \n buy \n delete \n", projectName)
 		return
 	}
-	// Invalid arguments
-	if len(args) > 1 && (args[1] != "list" && args[1] != "search") {
-		fmt.Printf("Kullanabileceğiniz komutlar : \n search => arama işlemi için \n list => listeleme işlemi için\n")
-		return
-	}
-
 	if len(args) == 2 && args[1] == "list" { // Listing books
 		library.ListBooks()
 		return

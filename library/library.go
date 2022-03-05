@@ -31,7 +31,7 @@ func ListBooks() {
 // List given books line by line by their name
 func ListGivenBooks(books []Book) {
 	for _, b := range books {
-		fmt.Println(b.name)
+		fmt.Printf("%s -- ISBN: %d \n", b.name, b.ISBN)
 	}
 }
 
@@ -40,6 +40,8 @@ func FindBooks(word string) []Book {
 	result := make([]Book, 0)
 	// word is turned to lowercase to search case insensitive
 	searchWord := strings.ToLower(word)
+	// check word is integer so ISBN number can be searched
+	isInteger, value := IsInt(searchWord)
 	for _, book := range Books {
 		// book name is turned to lowercase to search case insensitive
 		if strings.Contains(strings.ToLower(book.name), searchWord) {
@@ -47,8 +49,7 @@ func FindBooks(word string) []Book {
 			// author name is turned to lowercase to search case insensitive
 		} else if strings.Contains(strings.ToLower(book.author), searchWord) {
 			result = append(result, *book)
-			// check word is integer so ISBN number can be searched
-		} else if check, value := IsInt(searchWord); check {
+		} else if isInteger {
 			if book.ISBN == value {
 				result = append(result, *book)
 			}
@@ -62,6 +63,9 @@ func FindBooks(word string) []Book {
 
 //Find book with id
 func FindBook(id int) (Book, error) {
+	if len(Books) < id {
+		return *new(Book), ErrBookNotFound
+	}
 	book := *Books[id]
 	if book.isDeleted {
 		return *new(Book), ErrBookNotFound
@@ -70,12 +74,16 @@ func FindBook(id int) (Book, error) {
 }
 
 //Buy book if enoubh count exist in stock
-func Buy(id int, count int) error {
+func Buy(id int, count int) {
 	book, err := FindBook(id)
 	if err != nil {
-		return err
+		fmt.Println(err.Error())
+		return
 	}
-	return book.Buy(count)
+	err2 := book.Buy(count)
+	if err2 != nil {
+		fmt.Println(err2.Error())
+	}
 
 }
 
@@ -95,7 +103,10 @@ func IsInt(s string) (bool, int) {
 func DeleteBook(id int) {
 	b, err := FindBook(id)
 	if err == nil {
-		err = b.Delete()
+		err2 := b.Delete()
+		if err2 != nil {
+			fmt.Println(err2.Error())
+		}
 	} else {
 		fmt.Println(err.Error())
 	}
