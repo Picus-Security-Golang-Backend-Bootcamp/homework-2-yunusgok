@@ -24,10 +24,14 @@ func main() {
 		fmt.Printf("%s operations are : \n search \n list \n buy \n delete \n", projectName)
 		return
 	}
-	if len(args) == 2 && args[1] == "list" { // Listing books
+
+	if len(args) == 2 && args[1] == "list" {
+		//List operation
 		library.ListBooks()
 		return
+
 	} else if len(args) == 2 && args[1] == "search" {
+		//Search Operation
 		fmt.Printf("Enter the words you want to search...")
 		return
 	} else if args[1] == "search" { //
@@ -35,7 +39,7 @@ func main() {
 		library.ListGivenBooks(library.FindBooks(word))
 		return
 	} else if args[1] == "buy" {
-
+		// Buy Operation
 		if len(args) > 4 {
 			fmt.Println("Enter an <ID> and <count> to buy given number of books")
 			return
@@ -48,7 +52,7 @@ func main() {
 		}
 		library.Buy(id, count)
 	} else if args[1] == "delete" {
-
+		//Delete Operation
 		if len(args) > 3 {
 			fmt.Println("Enter an <ID> to delete a book")
 			return
